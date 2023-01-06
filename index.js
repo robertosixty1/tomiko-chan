@@ -239,13 +239,15 @@ client.on('interactionCreate', async (interaction) => {
         var role = await interaction.member.guild.roles.cache.find(role => String(role.name).includes(role_name));
         if (await interaction.member.roles.cache.some(r => String(r.name).includes(role_name))) {
             await interaction.member.roles.remove(role);
-            await interaction.reply(`Removed "${interaction.user.username}" from role "${role.name}"`).then(() => {
-                setTimeout(() => interaction.deleteReply(), 3000);
+            await interaction.reply({
+                content: `Removed "${interaction.user.username}" from role "${role.name}"`,
+                ephemeral: true
             });
         } else {
             await interaction.member.roles.add(role);
-            await interaction.reply(`Added "${interaction.user.username}" to role "${role.name}"`).then(() => {
-                setTimeout(() => interaction.deleteReply(), 3000);
+            await interaction.reply({
+                content: `Added "${interaction.user.username}" to role "${role.name}"`,
+                ephemeral: true
             });
         }
     }
